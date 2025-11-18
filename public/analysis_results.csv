@@ -1,0 +1,12 @@
+AnalysisType,AdHoc_Value,Group_Value,Parameters
+GlobalMean_Throughput,0.495007,0.494997,Mbps
+GlobalMean_Load,5,5,normalized
+GlobalMean_Delay,0.00010909,0.00038408,seconds
+MM1_Throughput,4.995,4.995,Mbps
+MM1K_Throughput,3.75,3.75,Mbps
+Specialized_Throughput,5,5,Mbps
+MM_Delay_Model,inf,inf,seconds
+MM_Loss_Model,0.25,0.25,ratio
+Simulation_Points,11,11,count
+Lambda_Range,0-10,0-10,packets/sec
+Node_Load_Mode,custom,custom,type
