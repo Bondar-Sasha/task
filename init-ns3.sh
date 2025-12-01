@@ -9,16 +9,23 @@ BUILD_TESTS="--enable-tests"
 
 echo "🔹 Установка ns-3.${NS3_VERSION} (официальный релиз)"
 
+# Проверка, что скрипт не запущен от root
+if [ "$EUID" -eq 0 ]; then
+    echo "❌ Не запускайте установку ns-3 от root. Используйте обычного пользователя."
+    exit 1
+fi
+
+# Проверка наличия apt
 if ! command -v apt &> /dev/null; then
     echo "❌ Поддерживаются только Debian/Ubuntu."
     exit 1
 fi
 
 echo "🔹 Обновление системы..."
-apt update
+sudo apt update
 
 echo "🔹 Установка системных зависимостей..."
-apt install -y \
+sudo apt install -y \
     g++ \
     python3 \
     python3-dev \
@@ -38,18 +45,16 @@ apt install -y \
     libboost-all-dev \
     libgsl-dev \
     protobuf-compiler \
-    libprotobuf-dev
+    libprotobuf-dev \
+    software-properties-common
 
-apt update
+echo "🔹 Установка gcc-11/g++-11..."
+sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+sudo apt update
+sudo apt install -y gcc-11 g++-11
 
-apt install -y software-properties-common
-add-apt-repository -y ppa:ubuntu-toolchain-r/test
-apt update
-
-apt install -y gcc-11 g++-11
-
-update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 110
-update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 110
+sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 110
+sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 110
 
 echo "🔹 Проверка версий компонентов..."
 
